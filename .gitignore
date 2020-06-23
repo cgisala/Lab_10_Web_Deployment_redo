@@ -8,3 +8,4 @@ env/
 .vscode
 geckodriver
 .directory
+cloud_sql_proxy

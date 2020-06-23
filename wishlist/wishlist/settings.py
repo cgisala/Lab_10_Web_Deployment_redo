@@ -74,13 +74,23 @@ WSGI_APPLICATION = 'wishlist.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+# Dev database name 'os.path.join(BASE_DIR, 'db.sqlite3')'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'places',
+        'USER': 'traveler',
+        'PASSWORD': os.getenv('TRAVELER_PW'),
+        'HOST': '/cloudsql/wishlist-281108:us-central1:wishlist-db',
+        'PORT': '5432'
     }
 }
+
+# If not running at GAE, then replace the host with your local
+# computer to connect to the database via cloud_sql_proxy
+if not os.getenv('GAE_INSTANCE'):
+    DATABASES['default']['HOST'] = '127.0.0.1'
 
 
 # Password validation
